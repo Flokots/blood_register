@@ -5,14 +5,15 @@
 // Define donor struct
 typedef struct donor {
     char name[20];
-    char blood_group[3];
     char email[20];
+    char blood_group[3];
     int donations;
 
 } donor;
 
 // Get name of the file as a command line argument
 int input(donor **d, char *fName, int *l);
+void list(donor *c, int l);
 
 int main () 
 {
@@ -30,6 +31,17 @@ int main ()
         }
     }
 
+    while (1)
+    {
+        switch(options())
+        {
+            case 1: 
+                list(donors, length);
+                break;
+           
+
+        }
+    }
    
     options();
 }
@@ -83,11 +95,20 @@ int input(donor **d, char *fName, int *l)
 
     for (i = 0; i < *l; i++)
     {
-        fscanf(fp, "%s%s%s%d", (*d)[i].name, (*d)[i].blood_group, (*d)[i].email, &(*d)[i].donations);
+        fscanf(fp, "%s%s%s%d", (*d)[i].name,  (*d)[i].email, (*d)[i].blood_group, &(*d)[i].donations);
     }
 
     fclose(fp);
     printf("The data has been into the list.\n");
 
     return 0;
+}
+
+void list(donor *d, int l)
+{
+    int i;
+    for (i = 0; i < l; i++)
+    {
+        printf("Name: %-20s email: %-20s bloodgroup: %-3s donations: %d\n", d[i].name, d[i].email, d[i].blood_group, d[i].donations);
+    }
 }
