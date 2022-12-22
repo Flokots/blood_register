@@ -13,7 +13,6 @@ typedef struct donor {
 
 // Get name of the file as a command line argument
 int input(donor **d, char *fName, int *l);
-int overAgain();
 
 int main () 
 {
@@ -21,7 +20,9 @@ int main ()
     char fileName[100]; 
     int length = 0, again;
 
-    while (again = input(&donors, fileName, &length))
+    again = input(&donors, fileName, &length);
+
+    while (again)
     {
         if (again == 2)
         {
@@ -39,7 +40,7 @@ int input(donor **d, char *fName, int *l)
     char ch;
     int i;
 
-    prinf("Type the name of the text file you want to open: ");
+    printf("Type the name of the text file you want to open: ");
     scanf("%s", fName);
 
     if (!(fp = fopen(fName, "r")))
