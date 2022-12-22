@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// Get name of the file as a command line argument
+
 // Enter the current date
 //! Function to check that the date is valid
 // Print options to the user
@@ -17,25 +17,42 @@ int options()
 // Use a case switch to process user options
 // Function to print the list
 // Function to add new member
-// //! Check Valid Email 
-// int emailCheck(char *eTemp){
-// 	int i = 0, dotIndex, atIndex, numberOfDots = -1, numberOfAts = -1, diff;
+//! Check Valid Email 
+int emailCheck(char *eTemp){
+	int i = 0, dotIndex, atIndex, numberOfDots = -1, numberOfAts = -1, diff;
 
-// 	while(eTemp[i])
-// 	{
-// 		if(eTemp[i] == '.'){	dotIndex = i; numberOfDots++;	}
-// 		if(eTemp[i] == '@'){	atIndex = i; numberOfAts++;	}
-// 		i++;
-// 	}
+	while(eTemp[i])
+	{
+		if(eTemp[i] == '.'){	dotIndex = i; numberOfDots++;	}
+		if(eTemp[i] == '@'){	atIndex = i; numberOfAts++;	}
+		i++;
+	}
 	
-// 	if((diff = dotIndex - atIndex) < 0){ return 1; }
-// 	if(numberOfDots || numberOfAts){ return 1; }
-// 	if(!dotIndex || !atIndex || dotIndex == i-1 || atIndex == i-1 || diff == 1){ return 1; }
+	if((diff = dotIndex - atIndex) < 0){ return 1; }
+	if(numberOfDots || numberOfAts){ return 1; }
+	if(!dotIndex || !atIndex || dotIndex == i-1 || atIndex == i-1 || diff == 1){ return 1; }
 	
 	
-// 	return 0;
-// }
+	return 0;
+}
 
+
+int overAgain()
+{
+    char again;
+
+    printf("Do you want to try again? (y/n) ");
+    scanf(" %c", &again);
+
+    if (again == 'y')
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
 // If else statement to add another member
 // Function to accept blood group as input and check and print who can/cannot donate blood
 // Send email and notify the user
