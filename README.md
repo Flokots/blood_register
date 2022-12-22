@@ -1,13 +1,15 @@
 # Blood Giver Register
+The program helps the user handle a blood giver register. 
 
-### The list is stored in a **textfile** consisting of 6 columns: 
+### User Stories
+0. The list is stored in a **textfile** consisting of 6 columns:
+
 | Primary Keys | Names | Blood Groups | E-mail | Addresses | No. of blood donations | Date of the last donation |
 |--------------|-------|--------------|--------|-----------|------------------------|---------------------------|
 |              |       |              |        |           |                        |                           |
 |              |       |              |        |           |                        |                           |
 |              |       |              |        |           |                        |                           |
 
-### User Stories
 1. Parts of your program has to be stored in different files (e.g functions in a file called functions.c, the type of functions in functions.h and finally, function main in main.c). In case of an error, each block has to inform the user and offer a possibility of another trial. 
 2. The program has to be given the name of the file (to be handled) in command line. 
 3. The program has to check the number of the persons in the list (in the text file) and allocate an area in the memory with a proper size for the *dynamic structure array*. 
