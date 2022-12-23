@@ -41,7 +41,7 @@ int overAgain()
 {
     char again;
 
-    printf("Do you want to try again? (y/n) ");
+    printf("Do you want to continue with the program? (y/n) ");
     scanf(" %c", &again);
 
     if (again == 'y')
