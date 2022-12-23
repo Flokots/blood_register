@@ -13,17 +13,18 @@ typedef struct donor {
 } donor;
 
 // Get name of the file as a command line argument
-int input(donor **d, char *fName, int *l);
+int input(donor **d, char *fName, char *dateString, int *l);
 void list(donor *d, int l);
 
 int main () 
 {
     donor *donors = NULL; 
     char fileName[100]; 
+    char dateString[11];
     int length = 0, again;
 
 
-    while ((again = input(&donors, fileName, &length)))
+    while ((again = input(&donors, fileName, dateString, &length)))
     {
         if (again == 2)
         {
@@ -46,7 +47,7 @@ int main ()
     options();
 }
 
-int input(donor **d, char *fName, int *l)
+int input(donor **d, char *fName, char *dateString, int *l)
 {
     FILE *fp = NULL;
     char ch;
@@ -54,6 +55,9 @@ int input(donor **d, char *fName, int *l)
 
     printf("Type the name of the text file you want to open: ");
     scanf("%s", fName);
+
+    printf("Please enter the current date: ");
+    scanf("%s", dateString);
 
     if (!(fp = fopen(fName, "r")))
     {
