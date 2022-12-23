@@ -18,7 +18,7 @@ The program helps the user handle a blood giver register.
 6. The program has to enumerate its possibilities
    * printing the list
    * Adding a new member to the list
-   * Searching for a given blood group, warning the member found in the list by sending her/him an e-mail. Incrementing the number of blood in teh list and overwriting the date of blood donation in both the structure array and the file. 
+   * Searching for a given blood group, warning the member found in the list by sending her/him an e-mail. Incrementing the number of blood donations in the list and overwriting the date of blood donation in both the structure array and the file. 
 7. It has to execute the selected option. 
 8. It has to offer an option to continue the program, and in case of a "y" answer, it has to show the options again. 
 9. E-mail addresses have to be checked (considering . and @ characters and their positions). If there is a mistake in the file, the program has to inform the user. 
