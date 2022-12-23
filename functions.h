@@ -4,4 +4,5 @@
 int options();
 int emailCheck(char *eTemp);
 int overAgain();
+int isLeapYear(int year)
 

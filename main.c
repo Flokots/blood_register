@@ -1,6 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "functions.h"
+#include <time.h>
+#include "functions.h" 
+
+#define MAX_YR 9999
+#define MIN_YR 1900
+
+//Define structure to store date
+typedef struct
+{
+    int yyyy;
+    int mm;
+    int dd;
+} Date;
 
 // Define donor struct
 typedef struct donor
