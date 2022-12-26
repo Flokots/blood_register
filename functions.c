@@ -187,8 +187,25 @@ int overAgain()
 {
     char again;
 
-    printf("Do you want to try again? (y/n) ");
+    printf("\nDo you want to try again? (y/n) ");
     scanf(" %c", &again);
+
+    if (again == 'y')
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int addAgain()
+{
+    char again;
+
+    printf("One more donor (y/n)? ");
+    scanf("%c", &again);
 
     if (again == 'y')
     {
@@ -204,7 +221,7 @@ int continueProgram()
 {
     char cont;
 
-    printf("Do you want to keep the program running ? (y/n) ");
+    printf("\nDo you want to keep the program running ? (y/n) ");
     scanf(" %c", &cont);
 
     if (cont == 'y')

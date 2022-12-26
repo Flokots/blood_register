@@ -7,10 +7,10 @@
 typedef struct donor
 {
     char name[20];
-    char blood_group[3];
+    char blood_group[10];
     char email[20];
     int donations;
-    char last_donation_date[11];
+    char last_donation_date[20];
 
 } donor;
 
@@ -59,7 +59,10 @@ int main(int argc, char *argv[])
             break;
         
         case 2:
-            while(newDonor(&donors, &length));
+            while(newDonor(&donors, &length))
+            {
+                addAgain();
+            }
             break;
 
         }
@@ -70,9 +73,11 @@ int main(int argc, char *argv[])
 void list(donor *d, int l)
 {
     int i;
+    printf("\nBLOOD DONOR REGISTER: \n\n");
     for (i = 0; i < l; i++)
     {
-        printf("\nName: %-20s bloodgroup: %-3s email: %-20s  donations: %d last_donation_date: %-11s\n", d[i].name, d[i].blood_group, d[i].email, d[i].donations, d[i].last_donation_date);
+        printf("printing %d times", i);
+        printf("\nName: %-20s bloodgroup: %-10s email: %-20s  donations: %d last_donation_date: %-20s\n", d[i].name, d[i].blood_group, d[i].email, d[i].donations, d[i].last_donation_date);
     }
 }
 
@@ -99,7 +104,7 @@ int readFile(donor **d, char *fName, int *l)
         }
     }
 
-    if (!(*d = (donor *)malloc(*l * sizeof(donor))))
+    if (!(*d = (donor *)malloc(*l*sizeof(donor))))
     {
         printf("ERROR: there isn't enough memory. \n");
         if (overAgain())
@@ -144,15 +149,15 @@ int newDonor(donor **d, int *l)
     char emailTemp[20];
     char dateTemp[20];
     printf("Name: ");
-    scanf("%s", (*d)[*l - 1].name);
+    scanf("%s", (*d)[*l].name);
 
     printf("Blood Group: ");
-    scanf("%s", (*d)[*l - 1].blood_group);
+    scanf("%s", (*d)[*l].blood_group);
 
     validateEmail();
 
     printf("Number of blood donations: ");
-    scanf("%d", &(*d)[*l - 1].donations);
+    scanf("%d", &(*d)[*l].donations);
     
     validateNewDate();
 
@@ -169,8 +174,8 @@ int newDonor(donor **d, int *l)
         }
     }
 
-    copy(emailTemp, (*d)[*l - 1].email);
-    copy(dateTemp, (*d)[*l - 1].last_donation_date);
+    copy(emailTemp, (*d)[*l].email);
+    copy(dateTemp, (*d)[*l].last_donation_date);
 
     return 0;
 }

@@ -8,4 +8,5 @@ int validateEmail();
 int options();
 int emailCheck(char *eTemp);
 int overAgain();
+int addAgain();
 int continueProgram();
