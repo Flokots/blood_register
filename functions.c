@@ -47,13 +47,13 @@ int dateCheck(char *dTemp)
                 dotIndex = i;
             }
         }
-     
+
         if (numberOfDots)
         {
             return 1;
         }
 
-        if (!yearDotIndex || !monthDotIndex || !dayDotIndex || !dotIndex )
+        if (!yearDotIndex || !monthDotIndex || !dayDotIndex || !dotIndex)
         {
             return 1;
         }
@@ -72,24 +72,23 @@ int dateCheck(char *dTemp)
 
 int validateDate()
 {
-    char dateTemp[20];
-    printf("Please enter the current date. (e.g. 2019.03.02. and press <ENTER> )");
-    scanf("%s", dateTemp);
-
-    if (dateCheck(dateTemp))
+    do
     {
-        printf("ERROR: date is invalid! \n");
-        if (overAgain())
+        char dateTemp[20];
+        printf("Please enter the current date. (e.g. 2019.03.02. and press <ENTER> )");
+        scanf("%s", dateTemp);
+
+        if (dateCheck(dateTemp))
         {
-            return 1;
+            printf("ERROR: date is invalid! \n");
         }
-        else
+        else 
         {
+            
             return 0;
         }
-
-        return 0;
-    }
+        
+    } while (overAgain());
 
     return 0;
 }

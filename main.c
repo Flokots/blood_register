@@ -41,16 +41,12 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    while((validateDate()))
-    {
-        printf("\n- Program name: %s, file to be processed (%s) is open.\n", argv[0], argv[1]);
-        printf("\n- Number of blood donors in the list is checked. \n");
-        printf("\n- Memory block required for the structure array has been allocated.\n");
-        printf("\n- The content of the file (called \"%s\") has been read into the structure array.\n ", argv[1]);
+    validateDate();
 
-        return 0;
-    }
-   
+    printf("\n- Program name: %s, file to be processed (%s) is open.\n", argv[0], argv[1]);
+    printf("\n- Number of blood donors in the list is checked. \n");
+    printf("\n- Memory block required for the structure array has been allocated.\n");
+    printf("\n- The content of the file (called \"%s\") has been read into the structure array.\n ", argv[1]);
 
     do
     {
