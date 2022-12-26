@@ -1,8 +1,98 @@
 #include <stdio.h>
 
+int overAgain();
 
-// Enter the current date
+// TODO: Check the string length
+int str_length(char str[])
+{
+    int i;
+    int count = 0;
+
+    for (i = 0; str[i] != 0; i++)
+    {
+        count++;
+    }
+    return count;
+}
 //! Function to check that the date is valid
+int dateCheck(char *dTemp)
+{
+    int i = 0;
+    int yearDotIndex, monthDotIndex, dayDotIndex, dotIndex;
+    int numberOfDots = -3;
+
+    int count;
+    count = str_length(dTemp);
+
+    if (count == 11)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (dTemp[i] == '.')
+            {
+                if (i == 4)
+                {
+                    yearDotIndex = i;
+                }
+                if (i == 7)
+                {
+                    monthDotIndex = i;
+                }
+                if (i == 10)
+                {
+                    dayDotIndex = i;
+                }
+
+                numberOfDots++;
+                dotIndex = i;
+            }
+        }
+     
+        if (numberOfDots)
+        {
+            return 1;
+        }
+
+        if (!yearDotIndex || !monthDotIndex || !dayDotIndex || !dotIndex )
+        {
+            return 1;
+        }
+    }
+    else if (count < 11)
+    {
+        return 1;
+    }
+    else if (count > 11)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
+int validateDate()
+{
+    char dateTemp[20];
+    printf("Please enter the current date. (e.g. 2019.03.02. and press <ENTER> )");
+    scanf("%s", dateTemp);
+
+    if (dateCheck(dateTemp))
+    {
+        printf("ERROR: date is invalid! \n");
+        if (overAgain())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+
+        return 0;
+    }
+
+    return 0;
+}
 
 // Print options to the user
 int options()
@@ -18,33 +108,67 @@ int options()
 // Use a case switch to process user options
 // Function to print the list
 // Function to add new member
-//! Check Valid Email 
-int emailCheck(char *eTemp){
-	int i = 0, dotIndex, atIndex, numberOfDots = -1, numberOfAts = -1, diff;
+//! Check Valid Email
+int emailCheck(char *eTemp)
+{
+    int i = 0, dotIndex, atIndex, numberOfDots = -1, numberOfAts = -1, diff;
 
-	while(eTemp[i])
-	{
-		if(eTemp[i] == '.'){	dotIndex = i; numberOfDots++;	}
-		if(eTemp[i] == '@'){	atIndex = i; numberOfAts++;	}
-		i++;
-	}
-	
-	if((diff = dotIndex - atIndex) < 0){ return 1; }
-	if(numberOfDots || numberOfAts){ return 1; }
-	if(!dotIndex || !atIndex || dotIndex == i-1 || atIndex == i-1 || diff == 1){ return 1; }
-	
-	return 0;
+    while (eTemp[i])
+    {
+        if (eTemp[i] == '.')
+        {
+            dotIndex = i;
+            numberOfDots++;
+        }
+        if (eTemp[i] == '@')
+        {
+            atIndex = i;
+            numberOfAts++;
+        }
+        i++;
+    }
+
+    if ((diff = dotIndex - atIndex) < 0)
+    {
+        return 1;
+    }
+    if (numberOfDots || numberOfAts)
+    {
+        return 1;
+    }
+    if (!dotIndex || !atIndex || dotIndex == i - 1 || atIndex == i - 1 || diff == 1)
+    {
+        return 1;
+    }
+
+    return 0;
 }
-
 
 int overAgain()
 {
     char again;
 
-    printf("Do you want to continue with the program? (y/n) ");
+    printf("Do you want to try again? (y/n) ");
     scanf(" %c", &again);
 
     if (again == 'y')
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int continueProgram()
+{
+    char cont;
+
+    printf("Do you want to keep the program running ? (y/n) ");
+    scanf(" %c", &cont);
+
+    if (cont == 'y')
     {
         return 1;
     }

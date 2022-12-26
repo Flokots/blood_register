@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "functions.h" 
+#include "functions.h"
 
 // Define donor struct
 typedef struct donor
@@ -20,7 +20,6 @@ int readFile(donor **d, char *fName, int *l);
 int main(int argc, char *argv[])
 {
     donor *donors = NULL;
-    char dateString[11];
     int length = 0;
     int again;
 
@@ -30,12 +29,6 @@ int main(int argc, char *argv[])
         char *fileName = NULL;
         fileName = argv[1];
         readFile(&donors, fileName, &length);
-
-        printf("\n- Program name: %s, file to be processed (%s) is open.\n", argv[0], argv[1]);
-        printf("\n- Number of blood donors in the list is checked. \n");
-        printf("\n- Memory block required for the structure array has been allocated.\n");
-        printf("\n- The content of the file (called \"%s\") has been read into the structure array.\n ", argv[1]);
-
     }
     else if (argc > 2)
     {
@@ -48,20 +41,26 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    printf("\nPlease enter the current date. (e.g 2019.03.02. and press <ENTER> ): ");
-    scanf("%s", dateString);
+    while((validateDate()))
+    {
+        printf("\n- Program name: %s, file to be processed (%s) is open.\n", argv[0], argv[1]);
+        printf("\n- Number of blood donors in the list is checked. \n");
+        printf("\n- Memory block required for the structure array has been allocated.\n");
+        printf("\n- The content of the file (called \"%s\") has been read into the structure array.\n ", argv[1]);
 
-    do 
-     {
+        return 0;
+    }
+   
+
+    do
+    {
         switch (options())
         {
         case 1:
             list(donors, length);
             break;
         }
-    }
-    while (overAgain());
-   
+    } while (continueProgram());
 }
 
 void list(donor *d, int l)
@@ -75,51 +74,49 @@ void list(donor *d, int l)
 
 int readFile(donor **d, char *fName, int *l)
 {
-     printf("\nThis program helps you to calendar the blood donors\n\n");
+    printf("\nThis program helps you to calendar the blood donors\n\n");
 
-        char ch;
-        int i;
-        
-        FILE *fp = fopen(fName, "r");
+    char ch;
+    int i;
 
-        if (fp == NULL)
+    FILE *fp = fopen(fName, "r");
+
+    if (fp == NULL)
+    {
+        perror("fopen");
+        exit(EXIT_FAILURE);
+    }
+
+    while ((ch = fgetc(fp)) != EOF)
+    {
+        if (ch == '\n')
         {
-            perror("fopen");
-            exit(EXIT_FAILURE);
+            (*l)++;
         }
+    }
 
-        while ((ch = fgetc(fp)) != EOF)
+    if (!(*d = (donor *)malloc(*l * sizeof(donor))))
+    {
+        printf("ERROR: there isn't enough memory. \n");
+        if (overAgain())
         {
-            if (ch == '\n')
-            {
-                (*l)++;
-            }
+            return 1;
         }
-
-        if (!(*d = (donor *)malloc(*l*sizeof(donor))))
+        else
         {
-            printf("ERROR: there isn't enough memory. \n");
-            if (overAgain())
-            {
-                return 1;
-            }
-            else
-            {
-                printf("Program exits.\n");
-                return 2;
-            }
+            printf("Program exits.\n");
+            return 2;
         }
+    }
 
-        rewind(fp);
+    rewind(fp);
 
-        for (i = 0; i < *l; i++)
-        {
-            fscanf(fp, "%s%s%s%d%s", (*d)[i].name, (*d)[i].blood_group, (*d)[i].email, &(*d)[i].donations, (*d)[i].last_donation_date);
-        }
+    for (i = 0; i < *l; i++)
+    {
+        fscanf(fp, "%s%s%s%d%s", (*d)[i].name, (*d)[i].blood_group, (*d)[i].email, &(*d)[i].donations, (*d)[i].last_donation_date);
+    }
 
-        fclose(fp);
+    fclose(fp);
 
-        printf("The data has been read into the list.\n");
-
-        return 0;
+    return 0;
 }
