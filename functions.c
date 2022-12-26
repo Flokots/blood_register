@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 int overAgain();
+int emailCheck(char *eTemp);
 
 // TODO: Check the string length
 int str_length(char str[])
@@ -82,17 +83,58 @@ int validateDate()
         {
             printf("ERROR: date is invalid! \n");
         }
-        else 
+        else
         {
-            
+
             return 0;
         }
-        
+
     } while (overAgain());
 
     return 0;
 }
 
+int validateNewDate()
+{
+    do
+    {
+        char dateTemp[20];
+        printf("Date: ");
+        scanf("%s", dateTemp);
+
+        if (dateCheck(dateTemp))
+        {
+            printf("Invalid date!\n");
+        }
+        else
+        {
+            return 0;
+        }
+    } while (overAgain());
+
+    return 0;
+}
+
+int validateEmail()
+{
+    do
+    {
+        char emailTemp[20];
+        printf("Email: ");
+        scanf("%s", emailTemp);
+
+        if (emailCheck(emailTemp))
+        {
+            printf("Invalid email!\n");
+        }
+        else
+        {
+            return 0;
+        }
+    } while (overAgain());
+
+    return 0;
+}
 // Print options to the user
 int options()
 {
@@ -104,9 +146,7 @@ int options()
     system("clear");
     return option;
 }
-// Use a case switch to process user options
-// Function to print the list
-// Function to add new member
+
 //! Check Valid Email
 int emailCheck(char *eTemp)
 {
@@ -176,6 +216,9 @@ int continueProgram()
         return 0;
     }
 }
+
+// Function to add new member
+
 // If else statement to add another member
 // Function to accept blood group as input and check and print who can/cannot donate blood
 // Send email and notify the user

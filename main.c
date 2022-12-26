@@ -16,6 +16,8 @@ typedef struct donor
 
 void list(donor *d, int l);
 int readFile(donor **d, char *fName, int *l);
+int newDonor(donor **d, int *l);
+void copy(char *fromHere, char *toHere);
 
 int main(int argc, char *argv[])
 {
@@ -55,10 +57,16 @@ int main(int argc, char *argv[])
         case 1:
             list(donors, length);
             break;
+        
+        case 2:
+            while(newDonor(&donors, &length));
+            break;
+
         }
     } while (continueProgram());
 }
 
+// Function to print the list
 void list(donor *d, int l)
 {
     int i;
@@ -113,6 +121,56 @@ int readFile(donor **d, char *fName, int *l)
     }
 
     fclose(fp);
+
+    return 0;
+}
+
+void copy(char *fromHere, char *toHere)
+{
+    int i = 0;
+    while (fromHere[i])
+    {
+        toHere[i] = fromHere[i];
+        i++;
+    }
+    toHere[i] = 0;
+}
+
+
+
+// Function to add new Donor
+int newDonor(donor **d, int *l)
+{
+    char emailTemp[20];
+    char dateTemp[20];
+    printf("Name: ");
+    scanf("%s", (*d)[*l - 1].name);
+
+    printf("Blood Group: ");
+    scanf("%s", (*d)[*l - 1].blood_group);
+
+    validateEmail();
+
+    printf("Number of blood donations: ");
+    scanf("%d", &(*d)[*l - 1].donations);
+    
+    validateNewDate();
+
+    if (!(*d = (donor *)realloc(*d, ++(*l) * sizeof(donor))))
+    {
+        printf("ERROR: there isn't enough memory\n");
+        if (overAgain())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    copy(emailTemp, (*d)[*l - 1].email);
+    copy(dateTemp, (*d)[*l - 1].last_donation_date);
 
     return 0;
 }
