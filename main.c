@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
 {
     donor *donors = NULL;
     int length = 0;
-    int again;
 
     // Get name of the file as a command line argument
     if (argc == 2)

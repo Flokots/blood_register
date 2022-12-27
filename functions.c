@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include<stdlib.h>
 
 int overAgain();
 int emailCheck(char *eTemp);
@@ -18,7 +19,6 @@ int str_length(char str[])
 //! Function to check that the date is valid
 int dateCheck(char *dTemp)
 {
-    int i = 0;
     int yearDotIndex, monthDotIndex, dayDotIndex, dotIndex;
     int numberOfDots = -3;
 

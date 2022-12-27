@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/wintersunbirdie/Desktop/Projects/programming_project/blood_register",
+      "program": "/Users/wintersunbirdie/Desktop/Projects/programming_project/blood_register/build/Debug/outDebug"
+    }
+  ]
+}
