@@ -115,26 +115,7 @@ int validateNewDate()
     return 0;
 }
 
-int validateEmail()
-{
-    do
-    {
-        char emailTemp[20];
-        printf("Email: ");
-        scanf("%s", emailTemp);
 
-        if (emailCheck(emailTemp))
-        {
-            printf("Invalid email!\n");
-        }
-        else
-        {
-            return 0;
-        }
-    } while (overAgain());
-
-    return 0;
-}
 // Print options to the user
 int options()
 {
