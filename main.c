@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
                 do
                 {
                     newDonor(&donors, &length);
-                } while (addAgain());
+                } while (addAgain()); 
                 break;
             case 3:
                 printf("\n Which blood group do you need? ");

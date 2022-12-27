@@ -164,7 +164,7 @@ int addAgain()
 {
     char add;
 
-    printf("One more donor (y/n)? ");
+    printf("One more new donor (y/n)? ");
     scanf(" %c", &add);
 
     if (add == 'y')
@@ -190,6 +190,7 @@ int continueProgram()
     }
     else
     {
+        printf("Program quits. Have a nice day!");
         return 0;
     }
 }
