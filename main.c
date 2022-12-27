@@ -178,7 +178,23 @@ int newDonor(donor **d, int *l)
     printf("Number of blood donations: ");
     scanf("%d", &(*d)[*l].donations);
 
-    validateNewDate();
+    // validate New Date
+    printf("Date: ");
+    scanf("%s", dateTemp);
+
+    if (dateCheck(dateTemp))
+    {
+        printf("Invalid date!\n");
+        if (overAgain())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    copy(dateTemp, (*d)[*l].last_donation_date);
 
     if (!(*d = (donor *)realloc(*d, ++(*l) * sizeof(donor))))
     {

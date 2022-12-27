@@ -3,7 +3,6 @@
 
 int dateCheck(char *dTemp);
 int validateDate();
-int validateNewDate();
 int options();
 int emailCheck(char *eTemp);
 int overAgain();

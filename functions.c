@@ -94,28 +94,6 @@ int validateDate()
     return 0;
 }
 
-int validateNewDate()
-{
-    do
-    {
-        char dateTemp[20];
-        printf("Date: ");
-        scanf("%s", dateTemp);
-
-        if (dateCheck(dateTemp))
-        {
-            printf("Invalid date!\n");
-        }
-        else
-        {
-            return 0;
-        }
-    } while (overAgain());
-
-    return 0;
-}
-
-
 // Print options to the user
 int options()
 {
