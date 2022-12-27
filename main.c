@@ -48,10 +48,10 @@ int main(int argc, char *argv[])
                 break;
 
             case 2:
-                while (newDonor(&donors, &length))
+                do
                 {
-                    addAgain();
-                }
+                    newDonor(&donors, &length);
+                } while (addAgain());
                 break;
             case 3:
                 printf("\n Which blood group do you need? ");
@@ -157,21 +157,11 @@ int newDonor(donor **d, int *l)
     printf("Blood Group: ");
     scanf("%s", (*d)[*l].blood_group);
 
-    printf("Email: ");
-    scanf("%s", emailTemp);
-
-    if (emailCheck(emailTemp))
+    do
     {
-        printf("Invalid email!\n");
-        if (overAgain())
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
-    }
+        printf("Email: ");
+        scanf("%s", emailTemp);
+    } while (emailCheck(emailTemp));
 
     copy(emailTemp, (*d)[*l].email);
 
@@ -179,21 +169,12 @@ int newDonor(donor **d, int *l)
     scanf("%d", &(*d)[*l].donations);
 
     // validate New Date
-    printf("Date: ");
-    scanf("%s", dateTemp);
-
-    if (dateCheck(dateTemp))
+    do
     {
-        printf("Invalid date!\n");
-        if (overAgain())
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
-    }
+        printf("Date: ");
+        scanf("%s", dateTemp);
+    } while (dateCheck(dateTemp));
+
     copy(dateTemp, (*d)[*l].last_donation_date);
 
     if (!(*d = (donor *)realloc(*d, ++(*l) * sizeof(donor))))
@@ -208,6 +189,5 @@ int newDonor(donor **d, int *l)
             return 0;
         }
     }
-
     return 0;
 }

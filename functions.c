@@ -51,21 +51,29 @@ int dateCheck(char *dTemp)
 
         if (numberOfDots)
         {
+            printf("Invalid date!\n");
             return 1;
         }
 
         if (!yearDotIndex || !monthDotIndex || !dayDotIndex || !dotIndex)
         {
+            printf("Invalid date!\n");
             return 1;
         }
     }
     else if (count < 11)
     {
+        printf("Invalid date!\n");
         return 1;
     }
     else if (count > 11)
     {
+        printf("Invalid date!\n");
         return 1;
+    }
+    else
+    {
+        return 0;
     }
 
     return 0;
@@ -73,23 +81,13 @@ int dateCheck(char *dTemp)
 
 int validateDate()
 {
+    char dateTemp[20];
     do
     {
-        char dateTemp[20];
         printf("Please enter the current date. (e.g. 2019.03.02. and press <ENTER> )");
         scanf("%s", dateTemp);
 
-        if (dateCheck(dateTemp))
-        {
-            printf("ERROR: date is invalid! \n");
-        }
-        else
-        {
-
-            return 0;
-        }
-
-    } while (overAgain());
+    } while ((dateCheck(dateTemp)));
 
     return 0;
 }
@@ -128,14 +126,17 @@ int emailCheck(char *eTemp)
 
     if ((diff = dotIndex - atIndex) < 0)
     {
+        printf("Invalid email!\n");
         return 1;
     }
     if (numberOfDots || numberOfAts)
     {
+        printf("Invalid email!\n");
         return 1;
     }
     if (!dotIndex || !atIndex || dotIndex == i - 1 || atIndex == i - 1 || diff == 1)
     {
+        printf("Invalid email!\n");
         return 1;
     }
 
@@ -161,12 +162,12 @@ int overAgain()
 
 int addAgain()
 {
-    char again;
+    char add;
 
     printf("One more donor (y/n)? ");
-    scanf("%c", &again);
+    scanf(" %c", &add);
 
-    if (again == 'y')
+    if (add == 'y')
     {
         return 1;
     }
