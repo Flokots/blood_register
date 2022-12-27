@@ -190,7 +190,7 @@ int continueProgram()
     }
     else
     {
-        printf("Program quits. Have a nice day!");
+        printf("Program quits. Have a nice day!\n");
         return 0;
     }
 }
