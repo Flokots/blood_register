@@ -72,7 +72,6 @@ int main(int argc, char *argv[])
         }
         fflush(fp);
         fclose(fp);
-        printf("i outside is: %d\n", i);
 
         free(donors);
         printf("Program exits. Have a nice day!\n");
