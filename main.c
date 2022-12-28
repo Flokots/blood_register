@@ -18,6 +18,7 @@ int readFile(donor **d, char *fName, int *l);
 int newDonor(donor **d, int *l);
 void list(donor *d, int l);
 void copy(char *fromHere, char *toHere);
+// int writeFile(donor *d, char *fName, int l);
 
 int main(int argc, char *argv[])
 {
@@ -29,6 +30,9 @@ int main(int argc, char *argv[])
     {
         char *fileName = NULL;
         fileName = argv[1];
+        FILE *fp = NULL;
+        int i;
+
         readFile(&donors, fileName, &length);
 
         validateDate();
@@ -50,7 +54,7 @@ int main(int argc, char *argv[])
                 do
                 {
                     newDonor(&donors, &length);
-                } while (addAgain()); 
+                } while (addAgain());
                 break;
             case 3:
                 printf("\n Which blood group do you need? ");
@@ -59,6 +63,21 @@ int main(int argc, char *argv[])
                 printf("There are 3 options only: 1, 2 or 3. \n");
             }
         } while (continueProgram());
+
+        fp = fopen(fileName, "w");
+
+        for (i = 0; i < length; i++)
+        {
+            fprintf(fp, "%-20s \t%-15s \t\t%-20s  \t\t%d \t\t\t\t %-20s\n", donors[i].name, donors[i].blood_group, donors[i].email, donors[i].donations, donors[i].last_donation_date);
+        }
+        fflush(fp);
+        fclose(fp);
+        printf("i outside is: %d\n", i);
+
+        free(donors);
+        printf("Program exits. Have a nice day!\n");
+
+        return 0;
     }
     else if (argc > 2)
     {
@@ -190,3 +209,22 @@ int newDonor(donor **d, int *l)
     }
     return 0;
 }
+
+// int writeFile(donor *d, char *fName, int l)
+// {
+//     FILE *fp = NULL;
+//     int i;
+
+//     fp = fopen(fName, "w");
+//     for (i = 0; i < l; i++)
+//     {
+//         fprintf(fp, "\n\t %-20s \t%-15s \t\t%-20s  \t\t%d \t\t\t\t %-20s\n", d[i].name, d[i].blood_group, d[i].email, d[i].donations, d[i].last_donation_date);
+//         fflush(fp);
+//         fclose(fp);
+//     }
+
+//     free(d);
+//     printf("Program exits. Have a nice day!\n");
+
+//     return 0;
+// }
