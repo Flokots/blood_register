@@ -97,7 +97,7 @@ int options()
 {
     int option;
     printf("\n You can choose the following options:\n\n");
-    printf(" 1: Print the list \n 2: Add a new member to the list \n 3: Search for a given blood group and alert the member found in the list by sending her/him an e-mail. \nIncrement the number of blood donations of the person in the list and overwrite his/her date of last blood donation in both the structure array and the file \n\n ");
+    printf("- 1: Print the list \n- 2: Add a new member to the list \n- 3: Search for a given blood group and alert the member found in the list by sending her/him an e-mail. \nIncrement the number of blood donations of the person in the list and overwrite his/her date of last blood donation in both the structure array and the file \n\n ");
     printf("Your choice: ");
     scanf("%d", &option);
     system("clear");
