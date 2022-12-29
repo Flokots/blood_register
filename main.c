@@ -16,6 +16,7 @@ typedef struct donor
 
 int readFile(donor **d, char *fName, int *l);
 int newDonor(donor **d, int *l);
+int findDonors(donor *d, int l);
 void list(donor *d, int l);
 void copy(char *fromHere, char *toHere);
 // int writeFile(donor *d, char *fName, int l);
@@ -57,7 +58,7 @@ int main(int argc, char *argv[])
                 } while (addAgain());
                 break;
             case 3:
-                printf("\n Which blood group do you need? ");
+                findDonors(donors, length);
                 break;
             default:
                 printf("There are 3 options only: 1, 2 or 3. \n");
@@ -209,21 +210,112 @@ int newDonor(donor **d, int *l)
     return 0;
 }
 
-// int writeFile(donor *d, char *fName, int l)
-// {
-//     FILE *fp = NULL;
-//     int i;
+int searchDonor(donor *d, int l, char *name)
+{
+    int i, j, nameLength = str_length(name);
 
-//     fp = fopen(fName, "w");
+    for (i = 0; i < l; i++)
+    {
+        if (nameLength == str_length(d[i].name))
+        {
+            j = 0;
+            while (j < nameLength && name[j] == d[i].name[j])
+            {
+                j++;
+            }
+            if (j == nameLength)
+            {
+                return i;
+            }
+        }
+    }
+
+    return -1;
+}
+
+// int searchDonor(donor *d, int l, char *name)
+// {
+//     int i, j, nameLength = str_length(name);
+
 //     for (i = 0; i < l; i++)
 //     {
-//         fprintf(fp, "\n\t %-20s \t%-15s \t\t%-20s  \t\t%d \t\t\t\t %-20s\n", d[i].name, d[i].blood_group, d[i].email, d[i].donations, d[i].last_donation_date);
-//         fflush(fp);
-//         fclose(fp);
+//         if (nameLength == str_length(d[i].name))
+//         {
+//             j = 0;
+//             while (j < nameLength && name[j] == d[i].name[j])
+//             {
+//                 j++;
+//             }
+//             if (j == nameLength)
+//             {
+//                 return i;
+//             }
+//         }
 //     }
 
-//     free(d);
-//     printf("Program exits. Have a nice day!\n");
-
-//     return 0;
+//     return -1;
 // }
+
+int searchBloodGroup(donor *d, int l, char *bloodGroup)
+{
+    int i, j, bloodGroupLength = str_length(bloodGroup);
+
+    for (i = 0; i < l; i++)
+    {
+        if (bloodGroupLength == str_length(d[i].blood_group))
+        {
+            j = 0;
+            while (j < bloodGroupLength && bloodGroup[j] == d[i].blood_group[j])
+            {
+                j++;
+            }
+            if (j == bloodGroupLength)
+            {
+                return i;
+            }
+        }
+    }
+
+    return -1;
+}
+
+int findDonors(donor *d, int l)
+{
+    char bloodGroup[10];
+    int bloodGroupIndex;
+    int i;
+    int j;
+
+    printf("\n Which blood group do you need? ");
+    scanf("%s", bloodGroup);
+
+    if ((bloodGroupIndex = searchBloodGroup(d, l, bloodGroup)) == -1)
+    {
+        printf("ERROR: Blood group cannot be found.\n");
+        if (overAgain())
+        {
+            return 1;
+        }
+        else
+        {
+
+            return 0;
+        }
+    }
+    else
+    {
+        printf("\n\t\t\t\t\t\t\t\t\tLIST OF MATCHES: \n");
+        printf("-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+        printf("\nID \t Name \t\tBlood Group \t\tEmail \t\t\tNumber of Donations\t\tDate of last Donation\t\tCan/Cannot donate\n");
+
+        for (i = 0; i < l; i++)
+        {
+            if (bloodGroupIndex == i)
+            {
+                printf("\n%d \t%-20s %-15s \t%-20s  \t%d \t\t\t\t %-20s\t\tCannot donate\n", i + 1, d[i].name, d[i].blood_group, d[i].email, d[i].donations, d[i].last_donation_date);
+            }
+        }
+    }
+
+    return 0;
+}
