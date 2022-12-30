@@ -38,7 +38,6 @@ int main(int argc, char *argv[])
 
         readFile(&donors, fileName, &length);
 
-        
         do
         {
             printf("Please enter the current date. (e.g. 2019.03.02. and press <ENTER> )");
@@ -209,10 +208,23 @@ int newDonor(donor **d, int *l)
     return 0;
 }
 
-//* Check for the needed blood group
-int searchBloodGroup(donor *d, int l, char *bloodGroup)
+//* Find donors with the given blood group
+int findDonors(donor *d, int l, char *dateCopy)
 {
-    int i, j, bloodGroupLength = str_length(bloodGroup);
+    char bloodGroup[10], lDDCopy[20];
+    char *donationStatus;
+    int i, j;
+    int dateDiff;
+    struct tm lastDD, currentDate;
+
+    printf("\n Which blood group do you need? ");
+    scanf("%s", bloodGroup);
+
+    int bloodGroupLength = str_length(bloodGroup);
+
+    printf("\n\t\t\t\t\t\t\t\t\tLIST OF MATCHES: \n");
+    printf("-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+    printf("\nID \t Name \t\tBlood Group \t\tEmail \t\t\tNumber of Donations\t\tDate of last Donation\t\tCan/Cannot donate\n");
 
     for (i = 0; i < l; i++)
     {
@@ -224,51 +236,6 @@ int searchBloodGroup(donor *d, int l, char *bloodGroup)
                 j++;
             }
             if (j == bloodGroupLength)
-            {
-                return i;
-            }
-        }
-    }
-
-    return -1;
-}
-
-//* Find donors with the given blood group
-int findDonors(donor *d, int l, char *dateCopy)
-{
-    char bloodGroup[10], lDDCopy[20];
-    char *donationStatus;
-    int bloodGroupIndex;
-    struct tm lastDD, currentDate;
-    int i;
-    int j;
-    int dateDiff;
-
-    printf("\n Which blood group do you need? ");
-    scanf("%s", bloodGroup);
-
-    if ((bloodGroupIndex = searchBloodGroup(d, l, bloodGroup)) == -1)
-    {
-        printf("ERROR: Blood group cannot be found.\n");
-        if (overAgain())
-        {
-            return 1;
-        }
-        else
-        {
-
-            return 0;
-        }
-    }
-    else
-    {
-        printf("\n\t\t\t\t\t\t\t\t\tLIST OF MATCHES: \n");
-        printf("-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-        printf("\nID \t Name \t\tBlood Group \t\tEmail \t\t\tNumber of Donations\t\tDate of last Donation\t\tCan/Cannot donate\n");
-
-        for (i = 0; i < l; i++)
-        {
-            if (bloodGroupIndex == i)
             {
                 copy(d[i].last_donation_date, lDDCopy);
 
@@ -282,16 +249,21 @@ int findDonors(donor *d, int l, char *dateCopy)
 
                 if (dateDiff >= 90)
                 {
-                   donationStatus = "Can donate.";
+                    donationStatus = "Can donate.";
                 }
                 else
                 {
                     donationStatus = "Cannot donate.";
                 }
-                printf("\n%d \t%-20s %-15s \t%-20s  \t%d \t\t\t\t %-20s\t\t%s\n", i + 1, d[i].name, d[i].blood_group, d[i].email, d[i].donations, d[i].last_donation_date, donationStatus);
+
+                printf("\n%d \t%-20s %-15s \t%-20s \t%d \t\t\t\t %-20s\t\t%s\n", i + 1, d[i].name, d[i].blood_group, d[i].email, d[i].donations, d[i].last_donation_date, donationStatus);
+                d[i].donations++;
+                replace_char(dateCopy, '-', '.');
+                copy(dateCopy, d[i].last_donation_date);
+
+                printf("E-mail(s) has been sent, number of blood donation has been incremented in both the structure array and the file");
             }
         }
     }
-
     return 0;
 }
