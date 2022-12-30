@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 
         do
         {
-            printf("Please enter the current date. (e.g. 2019.03.02. and press <ENTER> )");
+            printf("Please enter the current date. (e.g. 2019.03.02. and press <ENTER>) : ");
             scanf("%s", dateTemp);
         } while ((dateCheck(dateTemp)));
 
@@ -167,6 +167,7 @@ int newDonor(donor **d, int *l)
 {
     char emailTemp[20];
     char dateTemp[20];
+    printf("\nAdding a new donor: \n\n");
     printf("Name: ");
     scanf("%s", (*d)[*l].name);
 
@@ -261,9 +262,9 @@ int findDonors(donor *d, int l, char *dateCopy)
                 replace_char(dateCopy, '-', '.');
                 copy(dateCopy, d[i].last_donation_date);
 
-                printf("E-mail(s) has been sent, number of blood donation has been incremented in both the structure array and the file");
             }
         }
     }
+    printf("\nE-mail(s) has been sent, number of blood donation has been incremented in both the structure array and the file.\n");
     return 0;
 }

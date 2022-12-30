@@ -180,7 +180,7 @@ int addAgain()
 {
     char add;
 
-    printf("One more new donor (y/n)? ");
+    printf("\nOne more new donor (y/n)? ");
     scanf(" %c", &add);
 
     if (add == 'y')
