@@ -8,3 +8,4 @@ int emailCheck(char *eTemp);
 int overAgain();
 int addAgain();
 int continueProgram();
+void replace_char(char *string, char replace, char new);

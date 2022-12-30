@@ -3,7 +3,7 @@
 #include <time.h>
 #include "functions.h"
 
-// Define donor struct
+//* Define donor struct
 typedef struct donor
 {
     char name[20];
@@ -16,27 +16,36 @@ typedef struct donor
 
 int readFile(donor **d, char *fName, int *l);
 int newDonor(donor **d, int *l);
-int findDonors(donor *d, int l);
+int findDonors(donor *d, int l, char *dateCopy);
 void list(donor *d, int l);
 void copy(char *fromHere, char *toHere);
-// int writeFile(donor *d, char *fName, int l);
 
 int main(int argc, char *argv[])
 {
     donor *donors = NULL;
     int length = 0;
 
-    // Get name of the file as a command line argument
+    //* Get name of the file as a command line argument
     if (argc == 2)
     {
         char *fileName = NULL;
+        char dateTemp[20];
+        char dateCopy[20];
+
         fileName = argv[1];
         FILE *fp = NULL;
         int i;
 
         readFile(&donors, fileName, &length);
 
-        validateDate();
+        
+        do
+        {
+            printf("Please enter the current date. (e.g. 2019.03.02. and press <ENTER> )");
+            scanf("%s", dateTemp);
+        } while ((dateCheck(dateTemp)));
+
+        copy(dateTemp, dateCopy);
 
         printf("\n- Program name: %s, file to be processed (%s) is open.\n", argv[0], argv[1]);
         printf("\n- Number of blood donors in the list is checked. \n");
@@ -58,7 +67,7 @@ int main(int argc, char *argv[])
                 } while (addAgain());
                 break;
             case 3:
-                findDonors(donors, length);
+                findDonors(donors, length, dateCopy);
                 break;
             default:
                 printf("There are 3 options only: 1, 2 or 3. \n");
@@ -91,7 +100,7 @@ int main(int argc, char *argv[])
     }
 }
 
-// Function to print the list
+//* Print the list of registered blood donors.
 void list(donor *d, int l)
 {
     int i;
@@ -104,6 +113,7 @@ void list(donor *d, int l)
     }
 }
 
+//* Read content of the file into the dynamic structure array.
 int readFile(donor **d, char *fName, int *l)
 {
     printf("\nThis program helps you to calendar the blood donors\n\n");
@@ -153,18 +163,7 @@ int readFile(donor **d, char *fName, int *l)
     return 0;
 }
 
-void copy(char *fromHere, char *toHere)
-{
-    int i = 0;
-    while (fromHere[i])
-    {
-        toHere[i] = fromHere[i];
-        i++;
-    }
-    toHere[i] = 0;
-}
-
-// Function to add new Donor
+//* Add a new donor
 int newDonor(donor **d, int *l)
 {
     char emailTemp[20];
@@ -186,7 +185,7 @@ int newDonor(donor **d, int *l)
     printf("Number of blood donations: ");
     scanf("%d", &(*d)[*l].donations);
 
-    // validate New Date
+    //* Validate the date
     do
     {
         printf("Date: ");
@@ -210,52 +209,7 @@ int newDonor(donor **d, int *l)
     return 0;
 }
 
-int searchDonor(donor *d, int l, char *name)
-{
-    int i, j, nameLength = str_length(name);
-
-    for (i = 0; i < l; i++)
-    {
-        if (nameLength == str_length(d[i].name))
-        {
-            j = 0;
-            while (j < nameLength && name[j] == d[i].name[j])
-            {
-                j++;
-            }
-            if (j == nameLength)
-            {
-                return i;
-            }
-        }
-    }
-
-    return -1;
-}
-
-// int searchDonor(donor *d, int l, char *name)
-// {
-//     int i, j, nameLength = str_length(name);
-
-//     for (i = 0; i < l; i++)
-//     {
-//         if (nameLength == str_length(d[i].name))
-//         {
-//             j = 0;
-//             while (j < nameLength && name[j] == d[i].name[j])
-//             {
-//                 j++;
-//             }
-//             if (j == nameLength)
-//             {
-//                 return i;
-//             }
-//         }
-//     }
-
-//     return -1;
-// }
-
+//* Check for the needed blood group
 int searchBloodGroup(donor *d, int l, char *bloodGroup)
 {
     int i, j, bloodGroupLength = str_length(bloodGroup);
@@ -279,12 +233,16 @@ int searchBloodGroup(donor *d, int l, char *bloodGroup)
     return -1;
 }
 
-int findDonors(donor *d, int l)
+//* Find donors with the given blood group
+int findDonors(donor *d, int l, char *dateCopy)
 {
-    char bloodGroup[10];
+    char bloodGroup[10], lDDCopy[20];
+    char *donationStatus;
     int bloodGroupIndex;
+    struct tm lastDD, currentDate;
     int i;
     int j;
+    int dateDiff;
 
     printf("\n Which blood group do you need? ");
     scanf("%s", bloodGroup);
@@ -312,7 +270,25 @@ int findDonors(donor *d, int l)
         {
             if (bloodGroupIndex == i)
             {
-                printf("\n%d \t%-20s %-15s \t%-20s  \t%d \t\t\t\t %-20s\t\tCannot donate\n", i + 1, d[i].name, d[i].blood_group, d[i].email, d[i].donations, d[i].last_donation_date);
+                copy(d[i].last_donation_date, lDDCopy);
+
+                replace_char(dateCopy, '.', '-');
+                replace_char(lDDCopy, '.', '-');
+
+                strptime(dateCopy, "%F", &currentDate);
+                strptime(lDDCopy, "%F", &lastDD);
+
+                dateDiff = julian_day(&currentDate) - julian_day(&lastDD);
+
+                if (dateDiff >= 90)
+                {
+                   donationStatus = "Can donate.";
+                }
+                else
+                {
+                    donationStatus = "Cannot donate.";
+                }
+                printf("\n%d \t%-20s %-15s \t%-20s  \t%d \t\t\t\t %-20s\t\t%s\n", i + 1, d[i].name, d[i].blood_group, d[i].email, d[i].donations, d[i].last_donation_date, donationStatus);
             }
         }
     }

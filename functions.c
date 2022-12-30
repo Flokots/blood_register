@@ -4,7 +4,7 @@
 int overAgain();
 int emailCheck(char *eTemp);
 
-// TODO: Check the string length
+//* Check the string length
 int str_length(char str[])
 {
     int i;
@@ -16,7 +16,21 @@ int str_length(char str[])
     }
     return count;
 }
-//! Function to check that the date is valid
+
+
+//* Copy function
+void copy(char *fromHere, char *toHere)
+{
+    int i = 0;
+    while (fromHere[i])
+    {
+        toHere[i] = fromHere[i];
+        i++;
+    }
+    toHere[i] = 0;
+}
+
+//* Check date format
 int dateCheck(char *dTemp)
 {
     int yearDotIndex, monthDotIndex, dayDotIndex, dotIndex;
@@ -79,6 +93,7 @@ int dateCheck(char *dTemp)
     return 0;
 }
 
+//* Validate Date
 int validateDate()
 {
     char dateTemp[20];
@@ -86,13 +101,12 @@ int validateDate()
     {
         printf("Please enter the current date. (e.g. 2019.03.02. and press <ENTER> )");
         scanf("%s", dateTemp);
-
     } while ((dateCheck(dateTemp)));
 
     return 0;
 }
 
-// Print options to the user
+//* Print available options to the user.
 int options()
 {
     int option;
@@ -104,7 +118,7 @@ int options()
     return option;
 }
 
-//! Check Valid Email
+//* Check that the email format is correct.
 int emailCheck(char *eTemp)
 {
     int i = 0, dotIndex, atIndex, numberOfDots = -1, numberOfAts = -1, diff;
@@ -143,6 +157,7 @@ int emailCheck(char *eTemp)
     return 0;
 }
 
+//* Repeat the process
 int overAgain()
 {
     char again;
@@ -160,6 +175,7 @@ int overAgain()
     }
 }
 
+//* Add another user
 int addAgain()
 {
     char add;
@@ -177,6 +193,7 @@ int addAgain()
     }
 }
 
+//* Option to continue or end program
 int continueProgram()
 {
     char cont;
@@ -194,11 +211,32 @@ int continueProgram()
     }
 }
 
-// Function to add new member
+//* Replace the '.' in the date String to '-' .  
+void replace_char(char *string, char replace, char new)
+{
+   int stringLength = str_length(string);
 
-// If else statement to add another member
-// Function to accept blood group as input and check and print who can/cannot donate blood
+   for (int i = 0; i < stringLength; i++)
+   {
+    if (string[i] == replace && i != (stringLength - 1))
+    {
+        string[i] = new;
+    }
+   }
+}
+
+
+// The formulas for a and m can be distilled down to these tables.
+int Julian_A[12] = {1, 1, 0};
+int Julian_M[12] = {10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+int julian_day(struct tm *date)
+{
+    int a = Julian_A[date->tm_mon];
+    int m = Julian_M[date->tm_mon];
+    int y = date->tm_year + 1900 + 4800 - a;
+
+    return date->tm_mday + ((153 * m + 2) / 5) + 365 * y + y / 4 - y / 100 + y / 400 - 32045;
+}
 // Send email and notify the user
-// If else to check if the user wants to continue
-// Print Goodbye
-// Exit the program
+
