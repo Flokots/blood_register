@@ -69,7 +69,7 @@ int dateCheck(char *dTemp)
             return 1;
         }
 
-        if (!yearDotIndex || !monthDotIndex || !dayDotIndex || !dotIndex)
+        if (yearDotIndex != 4 || monthDotIndex != 7 || dayDotIndex != 10 || !dotIndex)
         {
             printf("Invalid date!\n");
             return 1;

@@ -19,6 +19,7 @@ int newDonor(donor **d, int *l);
 int findDonors(donor *d, int l, char *dateCopy);
 void list(donor *d, int l);
 void copy(char *fromHere, char *toHere);
+int searchBloodGroup(donor *d, int l, char *bloodGroup);
 
 int main(int argc, char *argv[])
 {
@@ -66,7 +67,7 @@ int main(int argc, char *argv[])
                 } while (addAgain());
                 break;
             case 3:
-                findDonors(donors, length, dateCopy);
+                while(findDonors(donors, length, dateCopy));
                 break;
             default:
                 printf("There are 3 options only: 1, 2 or 3. \n");
@@ -214,7 +215,7 @@ int findDonors(donor *d, int l, char *dateCopy)
 {
     char bloodGroup[10], lDDCopy[20];
     char *donationStatus;
-    int i, j;
+    int i, j, bloodgroupIndex;
     int dateDiff;
     struct tm lastDD, currentDate;
 
@@ -222,11 +223,23 @@ int findDonors(donor *d, int l, char *dateCopy)
     scanf("%s", bloodGroup);
 
     int bloodGroupLength = str_length(bloodGroup);
+    printf("Blood group length: %d", bloodGroupLength);
+
+    if ((bloodgroupIndex = searchBloodGroup(d, l, bloodGroup)) == -1)
+    {
+        printf("ERROR: Blood group cannot be found.\n");
+        if (overAgain())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
     printf("\n\t\t\t\t\t\t\t\t\tLIST OF MATCHES: \n");
-    printf("-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-    printf("\nID \t Name \t\tBlood Group \t\tEmail \t\t\tNumber of Donations\t\tDate of last Donation\t\tCan/Cannot donate\n");
-
+   
     for (i = 0; i < l; i++)
     {
         if (bloodGroupLength == str_length(d[i].blood_group))
@@ -250,7 +263,7 @@ int findDonors(donor *d, int l, char *dateCopy)
 
                 if (dateDiff >= 90)
                 {
-                    donationStatus = "Can donate.";
+                    donationStatus = "";
                 }
                 else
                 {
@@ -261,10 +274,32 @@ int findDonors(donor *d, int l, char *dateCopy)
                 d[i].donations++;
                 replace_char(dateCopy, '-', '.');
                 copy(dateCopy, d[i].last_donation_date);
-
             }
         }
     }
     printf("\nE-mail(s) has been sent, number of blood donation has been incremented in both the structure array and the file.\n");
     return 0;
+}
+
+int searchBloodGroup(donor *d, int l, char *bloodGroup)
+{
+    int i, j, bloodGroupLength = str_length(bloodGroup);
+
+    for (i = 0; i < l; i++)
+    {
+        if (bloodGroupLength == str_length(d[i].blood_group))
+        {
+            j = 0;
+            while (j < bloodGroupLength && bloodGroup[j] == d[i].blood_group[j])
+            {
+                j++;
+            }
+            if (j == bloodGroupLength)
+            {
+                return i;
+            }
+        }
+    }
+
+    return -1;
 }
